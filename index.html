@@ -394,6 +394,71 @@ h3{font-size:1rem;font-weight:500;color:var(--textd);letter-spacing:0.01em}
 .fg select option{background:var(--bg2);color:var(--textd)}
 .fg textarea{height:110px;resize:none}
 
+/* ── MODALS ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(7,15,26,0.88);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem 1.25rem;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.25s ease;
+  backdrop-filter:blur(6px);
+}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-box{
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  max-width:720px;width:100%;
+  max-height:82vh;display:flex;flex-direction:column;
+  position:relative;
+}
+.modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 2rem;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.modal-title{
+  font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;
+  color:var(--textd);letter-spacing:0.04em;
+}
+.modal-close{
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted2);cursor:pointer;font-size:18px;line-height:1;
+  transition:all 0.2s;flex-shrink:0;
+}
+.modal-close:hover{border-color:var(--blue2);color:var(--blue2)}
+.modal-body{
+  padding:2rem;overflow-y:auto;flex:1;
+  font-size:13.5px;color:var(--muted2);line-height:1.85;
+}
+.modal-body h3{
+  font-size:0.82rem;font-weight:600;color:var(--textd);
+  letter-spacing:0.07em;text-transform:uppercase;
+  margin:1.75rem 0 0.6rem;padding-bottom:0.4rem;
+  border-bottom:1px solid var(--border);
+}
+.modal-body h3:first-child{margin-top:0}
+.modal-body p{margin-bottom:0.85rem}
+.modal-body ul{margin:0.5rem 0 0.85rem 1.25rem}
+.modal-body ul li{margin-bottom:0.35rem}
+.modal-meta{
+  font-size:11px;color:var(--muted);letter-spacing:0.05em;
+  margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);
+}
+.modal-footer{
+  padding:1rem 2rem;border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;flex-shrink:0;
+}
+.modal-footer button{
+  padding:9px 24px;background:var(--blue);color:#fff;
+  font-size:12px;font-weight:500;letter-spacing:0.07em;
+  text-transform:uppercase;border:none;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background 0.2s;
+}
+.modal-footer button:hover{background:var(--blue2);color:var(--bg)}
+
 /* ── FOOTER ── */
 footer{
   background:var(--bg2);border-top:1px solid var(--border);
@@ -854,7 +919,7 @@ footer img{height:34px;mix-blend-mode:screen}
         <p class="cinfo-lead">Whether you are navigating a strategic challenge, evaluating a transaction, seeking a committed advisory partner — or exploring a strategic participation or investment — we would like to hear from you.</p>
         <div class="crows">
           <div class="crow"><div class="cico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="clbl">Location</div><div class="cval">Lisbon, Portugal</div></div></div>
-          <div class="crow"><div class="cico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="clbl">Email</div><div class="cval">info@nexusadvisorygroup.com</div></div></div>
+          <div class="crow"><div class="cico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="clbl">Email</div><div class="cval">info@nexus-advisorygroup.com</div></div></div>
           <div class="crow"><div class="cico"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="clbl">LinkedIn</div><div class="cval">linkedin.com/company/nexus-advisorygroup</div></div></div>
         </div>
       </div>
@@ -884,6 +949,104 @@ footer img{height:34px;mix-blend-mode:screen}
 </div>
 
 <!-- FOOTER -->
+<!-- PRIVACY POLICY MODAL -->
+<div class="modal-overlay" id="modalPrivacy" onclick="closeModal('modalPrivacy',event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">Privacy Policy</div>
+      <button class="modal-close" onclick="closeModal('modalPrivacy')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-meta">Last updated: January 2025 &nbsp;&middot;&nbsp; Nexus Advisory Group, Lisbon, Portugal</p>
+
+      <h3>1. Who we are</h3>
+      <p>Nexus Advisory Group ("we", "us", "our") is a strategic advisory firm based in Lisbon, Portugal. This Privacy Policy explains how we collect, use, and protect personal information provided to us through this website or in the course of our advisory services.</p>
+      <p>For the purposes of applicable data protection law, including the General Data Protection Regulation (GDPR) and Portuguese Law No. 58/2019, Nexus Advisory Group acts as the data controller.</p>
+
+      <h3>2. Information we collect</h3>
+      <p>We may collect and process the following categories of personal data:</p>
+      <ul>
+        <li><strong>Contact information</strong> — name, email address, company name, and any details you provide via our enquiry form</li>
+        <li><strong>Professional information</strong> — role, organisation, and areas of interest relevant to our services</li>
+        <li><strong>Technical data</strong> — IP address, browser type, and general usage data collected via standard server logs or analytics</li>
+        <li><strong>Communications</strong> — records of correspondence you initiate with us</li>
+      </ul>
+
+      <h3>3. How we use your information</h3>
+      <p>We process your personal data for the following purposes and on the following legal bases:</p>
+      <ul>
+        <li><strong>Responding to enquiries</strong> — to reply to messages you send us (legitimate interest / contractual necessity)</li>
+        <li><strong>Service delivery</strong> — to provide advisory services you have engaged us for (performance of a contract)</li>
+        <li><strong>Legal compliance</strong> — to meet our obligations under applicable law (legal obligation)</li>
+        <li><strong>Business development</strong> — to inform you of services that may be relevant to you, where you have not opted out (legitimate interest)</li>
+      </ul>
+      <p>We do not sell, rent, or trade your personal data to third parties.</p>
+
+      <h3>4. Data retention</h3>
+      <p>We retain personal data only for as long as necessary to fulfil the purposes for which it was collected, or as required by law. Enquiry data is typically retained for up to 3 years unless an ongoing advisory relationship is established.</p>
+
+      <h3>5. Your rights</h3>
+      <p>Under the GDPR, you have the right to: access the personal data we hold about you; request correction of inaccurate data; request erasure in certain circumstances; object to or restrict processing; request data portability; and lodge a complaint with the Portuguese data protection authority (CNPD) at <strong>www.cnpd.pt</strong>.</p>
+      <p>To exercise any of these rights, please contact us at <strong>info@nexus-advisorygroup.com</strong>.</p>
+
+      <h3>6. Cookies and tracking</h3>
+      <p>This website does not use tracking or advertising cookies. Basic server logs may capture technical data as described above. No third-party analytics or advertising scripts are loaded.</p>
+
+      <h3>7. Security</h3>
+      <p>We apply appropriate technical and organisational measures to protect your personal data against accidental or unlawful destruction, loss, alteration, or unauthorised disclosure.</p>
+
+      <h3>8. Changes to this policy</h3>
+      <p>We may update this Privacy Policy from time to time. Material changes will be reflected by an updated date at the top of this document.</p>
+
+      <h3>9. Contact</h3>
+      <p>For any questions about this Privacy Policy or your personal data, please contact us at: <strong>info@nexus-advisorygroup.com</strong></p>
+    </div>
+    <div class="modal-footer"><button onclick="closeModal('modalPrivacy')">Close</button></div>
+  </div>
+</div>
+
+<!-- LEGAL NOTICE MODAL -->
+<div class="modal-overlay" id="modalLegal" onclick="closeModal('modalLegal',event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">Legal Notice</div>
+      <button class="modal-close" onclick="closeModal('modalLegal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-meta">Effective: January 2025 &nbsp;&middot;&nbsp; Nexus Advisory Group, Lisbon, Portugal</p>
+
+      <h3>1. Company information</h3>
+      <p><strong>Nexus Advisory Group</strong><br>
+      Lisbon, Portugal<br>
+      Email: info@nexus-advisorygroup.com<br>
+      Website: nexus-advisorygroup.com</p>
+
+      <h3>2. Nature of services</h3>
+      <p>Nexus Advisory Group provides strategic consulting and financial advisory services to organisations. Our services are delivered on a professional, contractual basis and are subject to the terms agreed in each individual engagement letter or service agreement.</p>
+      <p>The content of this website is provided for general information purposes only and does not constitute financial, legal, or investment advice. Nothing on this website should be relied upon as the basis for any business, investment, or financial decision.</p>
+
+      <h3>3. No regulated financial advice</h3>
+      <p>Nexus Advisory Group is not an authorised investment firm within the meaning of MiFID II or the Portuguese Securities Code (Código dos Valores Mobiliários). We do not provide regulated investment advice, portfolio management, or brokerage services. Any information regarding financial markets or instruments is provided for contextual reference only.</p>
+
+      <h3>4. Intellectual property</h3>
+      <p>All content on this website — including text, design, graphics, and structure — is the property of Nexus Advisory Group and is protected by applicable intellectual property laws. Reproduction, distribution, or modification without prior written consent is prohibited.</p>
+
+      <h3>5. Limitation of liability</h3>
+      <p>To the fullest extent permitted by applicable law, Nexus Advisory Group shall not be liable for any direct, indirect, incidental, or consequential loss arising from use of this website or reliance on its content. We make no warranty as to the accuracy, completeness, or timeliness of information presented here.</p>
+
+      <h3>6. Third-party links</h3>
+      <p>This website may contain links to third-party websites. We are not responsible for the content, privacy practices, or availability of such websites and their inclusion does not constitute endorsement.</p>
+
+      <h3>7. Governing law</h3>
+      <p>This Legal Notice and any disputes arising in connection with this website shall be governed by and construed in accordance with the laws of Portugal. The courts of Lisbon shall have exclusive jurisdiction.</p>
+
+      <h3>8. Contact</h3>
+      <p>For any legal enquiries, please contact us at: <strong>info@nexus-advisorygroup.com</strong></p>
+    </div>
+    <div class="modal-footer"><button onclick="closeModal('modalLegal')">Close</button></div>
+  </div>
+</div>
+
 <footer>
   <div>
     <div style="margin-bottom:6px">
@@ -893,14 +1056,31 @@ footer img{height:34px;mix-blend-mode:screen}
     <div class="fcopy">&copy; 2025 Nexus Advisory Group &nbsp;&middot;&nbsp; Lisbon, Portugal &nbsp;&middot;&nbsp; All rights reserved</div>
   </div>
   <div class="flinks">
-    <a href="#">Privacy</a>
-    <a href="#">Legal</a>
+    <a href="#" onclick="openModal('modalPrivacy');return false;">Privacy</a>
+    <a href="#" onclick="openModal('modalLegal');return false;">Legal</a>
     <a href="https://www.linkedin.com/company/nexus-advisorygroup/" target="_blank">LinkedIn</a>
   </div>
 </footer>
 
 <script>
 /* ── SMOOTH SCROLL & NAV SPY ── */
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id,e){
+  if(e&&e.target!==document.getElementById(id))return;
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    ['modalPrivacy','modalLegal'].forEach(function(id){
+      document.getElementById(id).classList.remove('open');
+    });
+    document.body.style.overflow='';
+  }
+});
 function toggleMenu(){
   const b=document.getElementById('burger');
   const d=document.getElementById('drawer');
