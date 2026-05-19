@@ -214,10 +214,28 @@ h3{font-size:1rem;font-weight:500;color:var(--textd);letter-spacing:0.01em}
 .strip-scroll{flex:1;overflow:hidden}
 .strip-track{
   display:inline-flex;white-space:nowrap;
-  animation:stripScroll 32s linear infinite;
+  animation:stripScroll 50s linear infinite;
 }
 .strip-track:hover{animation-play-state:paused}
 @keyframes stripScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.news-ticker-item{
+  font-size:11.5px;color:var(--muted2);padding:0 2rem;
+  height:38px;display:inline-flex;align-items:center;gap:8px;
+  border-right:1px solid var(--border);white-space:nowrap;
+  text-decoration:none;transition:color 0.2s;cursor:pointer;
+}
+.news-ticker-item:hover{color:var(--textd)}
+.news-ticker-tag{
+  font-size:9px;color:var(--blue2);letter-spacing:0.1em;
+  text-transform:uppercase;font-weight:600;flex-shrink:0;
+  background:rgba(90,179,245,0.08);padding:2px 6px;border-radius:2px;
+}
+.news-ticker-source{
+  font-size:9.5px;color:var(--muted);font-style:italic;flex-shrink:0;
+}
+.news-ticker-sep{
+  color:var(--border2);font-size:10px;flex-shrink:0;
+}
 .strip-item{
   font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
   color:var(--muted2);padding:0 2.25rem;
@@ -230,26 +248,37 @@ h3{font-size:1rem;font-weight:500;color:var(--textd);letter-spacing:0.01em}
 /* ── SERVICE CARD HOVER OVERLAY ── */
 .svc-overlay{
   position:absolute;inset:0;
-  background:rgba(10,22,36,0.97);
-  display:flex;flex-direction:column;justify-content:center;
-  padding:1.75rem;
-  opacity:0;transform:translateY(6px);
-  transition:opacity 0.25s ease,transform 0.25s ease;
+  background:linear-gradient(160deg,rgba(10,22,36,0.98) 0%,rgba(16,36,58,0.99) 100%);
+  display:flex;flex-direction:column;justify-content:flex-start;
+  padding:1.6rem 1.75rem;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 0.28s ease,transform 0.28s ease;
   pointer-events:none;z-index:10;
 }
 .svc:hover .svc-overlay{opacity:1;transform:translateY(0);pointer-events:auto}
 .svc-overlay-title{
-  font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--textd);margin-bottom:1rem;font-weight:500;
-  border-bottom:1px solid var(--border2);padding-bottom:0.75rem;
+  font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--blue2);margin-bottom:0.5rem;font-weight:600;
+}
+.svc-overlay-desc{
+  font-size:12px;color:var(--muted2);line-height:1.7;
+  margin-bottom:0.9rem;padding-bottom:0.9rem;
+  border-bottom:1px solid var(--border2);
 }
 .svc-overlay ul{list-style:none}
 .svc-overlay ul li{
-  font-size:12.5px;color:var(--blue2);padding:5px 0;
-  border-bottom:1px solid rgba(90,179,245,0.08);
-  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--textd);padding:4px 0;
+  border-bottom:1px solid rgba(90,179,245,0.07);
+  display:flex;align-items:flex-start;gap:8px;line-height:1.5;
 }
-.svc-overlay ul li::before{content:'→';color:var(--blue2);font-size:10px;flex-shrink:0}
+.svc-overlay ul li::before{content:'→';color:var(--blue2);font-size:10px;flex-shrink:0;margin-top:2px}
+.svc-overlay-cta{
+  margin-top:auto;padding-top:0.85rem;
+  font-size:11px;color:var(--blue2);letter-spacing:0.08em;
+  text-transform:uppercase;display:flex;align-items:center;gap:6px;cursor:pointer;
+}
+.svc-overlay-cta::after{content:'→';transition:transform 0.2s}
+.svc-overlay:hover .svc-overlay-cta::after{transform:translateX(4px)}
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:3rem}
 .svc{
   background:var(--bg2);padding:2rem;
@@ -394,7 +423,89 @@ h3{font-size:1rem;font-weight:500;color:var(--textd);letter-spacing:0.01em}
 .fg select option{background:var(--bg2);color:var(--textd)}
 .fg textarea{height:110px;resize:none}
 
-/* ── MODALS ── */
+/* ── MARKET INTELLIGENCE WIDGET ── */
+.news-section{
+  background:linear-gradient(160deg,#0a1520 0%,#0d1e2e 100%);
+  padding:4rem 3.5rem;
+  border-top:3px solid var(--blue);
+  border-bottom:3px solid var(--blue);
+  position:relative;
+}
+.news-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--blue),var(--blue2),var(--blue),transparent);
+}
+.news-inner{max-width:1200px;margin:0 auto}
+
+/* ── CAROUSEL ── */
+.news-carousel{
+  position:relative;display:flex;align-items:center;
+  gap:1rem;margin-top:2.5rem;
+}
+.news-carousel-arrow{
+  flex-shrink:0;width:44px;height:44px;
+  background:rgba(36,120,200,0.12);border:1px solid var(--border2);
+  color:var(--blue2);font-size:20px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;user-select:none;z-index:2;
+}
+.news-carousel-arrow:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.news-carousel-arrow:disabled{opacity:0.25;cursor:default;pointer-events:none}
+.news-carousel-track{
+  flex:1;display:grid;grid-template-columns:1fr 1.2fr 1fr;
+  gap:1px;background:rgba(90,179,245,0.1);overflow:hidden;
+}
+/* centre card gets emphasis */
+.news-card{
+  background:rgba(21,31,46,0.85);
+  padding:1.75rem;
+  display:flex;flex-direction:column;gap:0.6rem;
+  text-decoration:none;transition:background 0.25s,transform 0.25s;
+  cursor:pointer;
+}
+.news-card:hover{background:rgba(28,42,58,0.95)}
+.news-card.center{
+  background:rgba(26,74,122,0.25);
+  border-left:2px solid var(--blue2);border-right:2px solid var(--blue2);
+}
+.news-card.center:hover{background:rgba(26,74,122,0.4)}
+.news-card.side{opacity:0.7}
+.news-card.side:hover{opacity:1}
+.news-card-tag{
+  font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--blue2);font-weight:700;
+  background:rgba(90,179,245,0.1);
+  display:inline-block;padding:2px 7px;width:fit-content;
+}
+.news-card-title{
+  font-size:13px;color:var(--textd);line-height:1.65;font-weight:400;
+}
+.news-card.center .news-card-title{font-size:14.5px;font-weight:500}
+.news-card-source{
+  font-size:11px;color:var(--muted);margin-top:auto;padding-top:0.75rem;
+  border-top:1px solid rgba(90,179,245,0.1);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.news-card-cta{
+  font-size:10px;color:var(--blue2);letter-spacing:0.06em;
+  text-transform:uppercase;opacity:0;transition:opacity 0.2s;
+}
+.news-card:hover .news-card-cta{opacity:1}
+.news-carousel-dots{
+  display:flex;justify-content:center;gap:8px;margin-top:1.25rem;
+}
+.news-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--border2);cursor:pointer;transition:all 0.2s;
+}
+.news-dot.active{background:var(--blue2);width:18px;border-radius:3px}
+.news-card-loading{
+  grid-column:1/-1;background:rgba(21,31,46,0.85);padding:2rem;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:12px;
+}
+@media(max-width:960px){.news-carousel-track{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.news-carousel-track{grid-template-columns:1fr}}
 .modal-overlay{
   position:fixed;inset:0;z-index:500;
   background:rgba(7,15,26,0.88);
@@ -561,6 +672,7 @@ footer img{height:34px;mix-blend-mode:screen}
     <li><a onclick="go('services')">Services</a></li>
     <li><a onclick="go('vision')">Vision</a></li>
     <li><a onclick="go('leadership')">Our Team</a></li>
+    <li><a onclick="go('intelligence')">Intelligence</a></li>
     <li><a onclick="go('contact')">Contact</a></li>
   </ul>
   <button class="nav-cta" onclick="go('contact')">Get in touch</button>
@@ -575,6 +687,7 @@ footer img{height:34px;mix-blend-mode:screen}
   <a onclick="go('services');closeMenu()">Services</a>
   <a onclick="go('vision');closeMenu()">Vision</a>
   <a onclick="go('leadership');closeMenu()">Our Team</a>
+  <a onclick="go('intelligence');closeMenu()">Intelligence</a>
   <a onclick="go('contact');closeMenu()">Contact</a>
   <a class="drawer-cta" onclick="go('contact');closeMenu()">Get in touch</a>
 </div>
@@ -613,33 +726,10 @@ footer img{height:34px;mix-blend-mode:screen}
 
 <!-- SERVICES ROLLING STRIP -->
 <div class="svc-strip">
-  <div class="strip-label">Our services</div>
+  <div class="strip-label">📰 Market News</div>
   <div class="strip-scroll">
-    <div class="strip-track">
-      <span class="strip-item">Financial Advisory</span>
-      <span class="strip-item">M&amp;A &amp; Transactions</span>
-      <span class="strip-item">Strategy Consulting</span>
-      <span class="strip-item">Digital Transformation</span>
-      <span class="strip-item">Industry 4.0</span>
-      <span class="strip-item">Commodities</span>
-      <span class="strip-item">Forex &amp; FX Risk</span>
-      <span class="strip-item">Operational Excellence</span>
-      <span class="strip-item">ESG &amp; Sustainability</span>
-      <span class="strip-item">Capital Raising</span>
-      <span class="strip-item">Corporate Strategy</span>
-      <span class="strip-item">Strategic Participations</span>
-      <span class="strip-item">Financial Advisory</span>
-      <span class="strip-item">M&amp;A &amp; Transactions</span>
-      <span class="strip-item">Strategy Consulting</span>
-      <span class="strip-item">Digital Transformation</span>
-      <span class="strip-item">Industry 4.0</span>
-      <span class="strip-item">Commodities</span>
-      <span class="strip-item">Forex &amp; FX Risk</span>
-      <span class="strip-item">Operational Excellence</span>
-      <span class="strip-item">ESG &amp; Sustainability</span>
-      <span class="strip-item">Capital Raising</span>
-      <span class="strip-item">Corporate Strategy</span>
-      <span class="strip-item">Strategic Participations</span>
+    <div class="strip-track" id="newsTicker">
+      <span class="news-ticker-item"><span class="news-ticker-tag">M&amp;A</span>Loading latest market intelligence...</span>
     </div>
   </div>
 </div>
@@ -692,12 +782,15 @@ footer img{height:34px;mix-blend-mode:screen}
         </ul>
         <div class="svc-overlay">
           <div class="svc-overlay-title">Financial advisory</div>
+          <div class="svc-overlay-desc">Independent, senior-led counsel across the full financial lifecycle — shaped entirely by what is right for the client.</div>
           <ul>
-            <li>M&amp;A origination, structuring and execution</li>
+            <li>M&A origination, structuring and execution</li>
             <li>Capital raising across debt and equity</li>
             <li>Financial restructuring and turnaround</li>
             <li>Valuation, modelling and fairness opinions</li>
+            <li>Debt & equity optimisation strategies</li>
           </ul>
+          <div class="svc-overlay-cta">Start a conversation</div>
         </div>
       </div>
       <div class="svc">
@@ -711,12 +804,15 @@ footer img{height:34px;mix-blend-mode:screen}
         </ul>
         <div class="svc-overlay">
           <div class="svc-overlay-title">Strategy consulting</div>
+          <div class="svc-overlay-desc">Strategies grounded in market reality and built for execution — not just for presentation.</div>
           <ul>
             <li>Corporate and business unit strategy</li>
             <li>Market entry and international expansion</li>
             <li>Competitive intelligence and positioning</li>
             <li>Operating model and governance design</li>
+            <li>Performance management and KPI frameworks</li>
           </ul>
+          <div class="svc-overlay-cta">Start a conversation</div>
         </div>
       </div>
       <div class="svc">
@@ -730,12 +826,15 @@ footer img{height:34px;mix-blend-mode:screen}
         </ul>
         <div class="svc-overlay">
           <div class="svc-overlay-title">Digital transformation</div>
+          <div class="svc-overlay-desc">Bridging strategic intent with operational delivery — guiding organisations through the complexity of digital change.</div>
           <ul>
             <li>Digital and AI readiness assessment</li>
             <li>Industry 4.0 strategy and roadmapping</li>
             <li>Process redesign and automation planning</li>
             <li>Technology vendor selection and integration</li>
+            <li>Change management and adoption support</li>
           </ul>
+          <div class="svc-overlay-cta">Start a conversation</div>
         </div>
       </div>
       <div class="svc">
@@ -749,12 +848,15 @@ footer img{height:34px;mix-blend-mode:screen}
         </ul>
         <div class="svc-overlay">
           <div class="svc-overlay-title">Commodities &amp; Forex</div>
+          <div class="svc-overlay-desc">Strategies to manage commodity and currency exposure, reduce risk and preserve margins.</div>
           <ul>
             <li>Commodity market analysis and price outlook</li>
             <li>Hedging strategy design and implementation</li>
             <li>FX exposure mapping and risk management</li>
             <li>Commodity procurement and sourcing advisory</li>
+            <li>Market monitoring and reporting frameworks</li>
           </ul>
+          <div class="svc-overlay-cta">Start a conversation</div>
         </div>
       </div>
       <div class="svc">
@@ -768,12 +870,15 @@ footer img{height:34px;mix-blend-mode:screen}
         </ul>
         <div class="svc-overlay">
           <div class="svc-overlay-title">Operational excellence</div>
+          <div class="svc-overlay-desc">Unlocking value already within the organisation — through performance, efficiency and disciplined execution.</div>
           <ul>
             <li>KPI design and performance management</li>
             <li>Cost base review and transformation</li>
             <li>Compliance architecture and risk frameworks</li>
             <li>EBITDA and working capital improvement</li>
+            <li>Operational diagnostics and benchmarking</li>
           </ul>
+          <div class="svc-overlay-cta">Start a conversation</div>
         </div>
       </div>
       <div class="svc">
@@ -787,12 +892,15 @@ footer img{height:34px;mix-blend-mode:screen}
         </ul>
         <div class="svc-overlay">
           <div class="svc-overlay-title">Sustainable growth</div>
+          <div class="svc-overlay-desc">Embedding sustainability as a driver of competitive advantage — not a compliance exercise.</div>
           <ul>
             <li>ESG strategy design and integration</li>
             <li>Sustainable business model development</li>
             <li>Stakeholder and investor engagement</li>
             <li>Impact measurement and ESG reporting</li>
+            <li>Regulatory alignment (CSRD, SFDR, EU Taxonomy)</li>
           </ul>
+          <div class="svc-overlay-cta">Start a conversation</div>
         </div>
       </div>
     </div>
@@ -910,6 +1018,32 @@ footer img{height:34px;mix-blend-mode:screen}
 </div>
 
 <!-- CONTACT -->
+<!-- MARKET INTELLIGENCE -->
+<div class="news-section" id="intelligence">
+  <div class="news-inner">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:3rem;flex-wrap:wrap">
+      <div>
+        <div class="eyebrow">Market intelligence</div>
+        <h2 style="margin-bottom:0.5rem">Insights &amp; Perspectives</h2>
+        <p style="font-size:13.5px;color:var(--muted2);max-width:520px;line-height:1.75">Curated news and analysis across M&A, capital markets, ESG and digital transformation — the context that shapes strategic decisions.</p>
+      </div>
+      <div id="nexusView" style="flex-shrink:0;min-width:240px;max-width:280px;background:var(--bg2);border:1px solid var(--border2);padding:1.5rem;display:none">
+        <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue2);font-weight:600;margin-bottom:0.75rem">Nexus Perspective</div>
+        <div id="nexusViewTitle" style="font-size:13.5px;color:var(--textd);line-height:1.55;font-weight:500;margin-bottom:0.75rem"></div>
+        <a id="nexusViewLink" href="https://www.linkedin.com/company/nexus-advisorygroup" target="_blank" style="font-size:11px;color:var(--blue2);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Read on LinkedIn →</a>
+      </div>
+    </div>
+    <div class="news-carousel">
+      <button class="news-carousel-arrow" id="newsArrowPrev" onclick="newsMove(-1)">&#8592;</button>
+      <div class="news-carousel-track" id="newsGrid">
+        <div class="news-card-loading">Loading latest news...</div>
+      </div>
+      <button class="news-carousel-arrow" id="newsArrowNext" onclick="newsMove(1)">&#8594;</button>
+    </div>
+    <div class="news-carousel-dots" id="newsDots"></div>
+  </div>
+</div>
+
 <div class="sec-alt" id="contact">
   <div class="sec-alt-inner">
     <div class="eyebrow">Get in touch</div>
@@ -1081,6 +1215,157 @@ document.addEventListener('keydown',function(e){
     document.body.style.overflow='';
   }
 });
+/* ── MARKET INTELLIGENCE NEWS ── */
+function renderCarousel(idx){
+  const articles = window._newsArticles;
+  if(!articles || !articles.length) return;
+  const n = articles.length;
+  const grid = document.getElementById('newsGrid');
+  const dots = document.getElementById('newsDots');
+  const prev = document.getElementById('newsArrowPrev');
+  const next = document.getElementById('newsArrowNext');
+  if(!grid) return;
+
+  // Show 3 cards: prev, current (centre), next — wrapping
+  const slots = [
+    articles[(idx - 1 + n) % n],
+    articles[idx],
+    articles[(idx + 1) % n],
+  ];
+  const classes = ['side','center','side'];
+
+  grid.innerHTML = slots.map((a,i) =>
+    `<a class="news-card ${classes[i]}" href="${a.url}" target="_blank" rel="noopener">
+      <div class="news-card-tag">${a.tag}</div>
+      <div class="news-card-title">${a.title}</div>
+      <div class="news-card-source">
+        <span>${a.source}</span>
+        <span>${a.date}</span>
+        <span class="news-card-cta">Read →</span>
+      </div>
+    </a>`
+  ).join('');
+
+  // Dots
+  if(dots){
+    dots.innerHTML = articles.map((_,i) =>
+      `<div class="news-dot${i===idx?' active':''}" onclick="newsMove(${i - idx})"></div>`
+    ).join('');
+  }
+
+  // Arrows always enabled (infinite loop)
+  if(prev) prev.disabled = false;
+  if(next) next.disabled = false;
+
+  window._newsIndex = idx;
+}
+
+function newsMove(delta){
+  const articles = window._newsArticles;
+  if(!articles) return;
+  const n = articles.length;
+  const newIdx = ((window._newsIndex || 0) + delta + n) % n;
+  renderCarousel(newIdx);
+}
+
+// Keyboard support
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowLeft') newsMove(-1);
+  if(e.key === 'ArrowRight') newsMove(1);
+});
+
+async function loadNews(){
+  const grid = document.getElementById('newsGrid');
+  const ticker = document.getElementById('newsTicker');
+  if(!grid) return;
+
+  // Safe public RSS feeds — headlines + source + link only (no article text)
+  // Multiple RSS feeds for variety — BBC Business + Reuters (public feeds)
+  const rss = 'https://api.rss2json.com/v1/api.json?api_key=public&count=8&rss_url=';
+  const feeds = [
+    { url:'https://feeds.bbci.co.uk/news/business/rss.xml',   source:'BBC Business' },
+    { url:'https://feeds.reuters.com/reuters/businessNews',    source:'Reuters' },
+    { url:'https://feeds.reuters.com/reuters/companyNews',     source:'Reuters' },
+  ];
+
+  const fallback = [
+    { title:"M&A activity rebounds as deal-makers return to the table in 2026", tag:"M&A", source:"Reuters", url:"https://reuters.com/business", date:"Today" },
+    { title:"Private equity shifts focus to operational value creation post-acquisition", tag:"Strategy", source:"Reuters", url:"https://reuters.com/business", date:"This week" },
+    { title:"CSRD reporting requirements: what European boards need to know now", tag:"ESG", source:"BBC Business", url:"https://bbc.co.uk/news/business", date:"This week" },
+    { title:"Digital transformation spending shifts from infrastructure to AI integration", tag:"Digital", source:"BBC Business", url:"https://bbc.co.uk/news/business", date:"This week" },
+    { title:"CFOs increasingly take a seat at the M&A strategy table, survey finds", tag:"Governance", source:"Reuters", url:"https://reuters.com/business", date:"This month" },
+    { title:"Commodity markets: managing volatility in an uncertain macro environment", tag:"Commodities", source:"Reuters", url:"https://reuters.com/markets", date:"This month" },
+    { title:"Boards under pressure to integrate ESG into core strategy", tag:"ESG", source:"BBC Business", url:"https://bbc.co.uk/news/business", date:"This week" },
+    { title:"Capital markets activity picks up as deal valuations stabilise", tag:"Finance", source:"Reuters", url:"https://reuters.com/markets", date:"Today" },
+    { title:"Operational resilience becomes board-level priority post-pandemic", tag:"Strategy", source:"BBC Business", url:"https://bbc.co.uk/news/business", date:"This month" },
+  ];
+
+  const tagMap = (title) => {
+    const t = title.toLowerCase();
+    if(t.includes('merger')||t.includes('acqui')||t.includes('deal')||t.includes('takeover')||t.includes('buyout')) return 'M&A';
+    if(t.includes('esg')||t.includes('sustainab')||t.includes('climate')||t.includes('carbon')||t.includes('csrd')) return 'ESG';
+    if(t.includes('digital')||t.includes(' ai ')||t.includes('tech')||t.includes('transform')) return 'Digital';
+    if(t.includes('commodit')||t.includes(' oil')||t.includes('gold')||t.includes('copper')||t.includes('energy')) return 'Commodities';
+    if(t.includes('forex')||t.includes('currency')||t.includes(' fx ')||t.includes('dollar')||t.includes('euro')||t.includes('sterling')) return 'Forex';
+    if(t.includes('board')||t.includes('cfo')||t.includes('ceo')||t.includes('govern')||t.includes('execut')) return 'Governance';
+    if(t.includes('capital')||t.includes('fund')||t.includes('invest')||t.includes('equity')||t.includes('ipo')) return 'Finance';
+    return 'Strategy';
+  };
+
+  let articles = [];
+
+  // Try multiple feeds in parallel
+  try {
+    const results = await Promise.allSettled(
+      feeds.map(f => fetch(rss + encodeURIComponent(f.url), { signal: AbortSignal.timeout(6000) })
+        .then(r => r.json())
+        .then(d => ({ items: d.items || [], source: f.source }))
+      )
+    );
+    results.forEach(r => {
+      if(r.status === 'fulfilled' && r.value.items.length > 0){
+        r.value.items.slice(0,4).forEach(it => {
+          articles.push({
+            title: it.title,
+            tag: tagMap(it.title),
+            source: r.value.source,
+            url: it.link,
+            date: new Date(it.pubDate).toLocaleDateString('en-GB',{day:'numeric',month:'short'})
+          });
+        });
+      }
+    });
+    // Deduplicate by title
+    const seen = new Set();
+    articles = articles.filter(a => {
+      if(seen.has(a.title)) return false;
+      seen.add(a.title); return true;
+    });
+  } catch(e){ /* use fallback */ }
+
+  if(articles.length < 3) articles = fallback;
+  const gridArticles = articles.slice(0, 6);
+  const tickerArticles = articles.slice(0, 12);
+
+  // Store articles globally for carousel
+  window._newsArticles = gridArticles;
+  window._newsIndex = 0;
+  renderCarousel(0);
+
+  // Populate ticker strip — headline + source, duplicated for infinite scroll
+  if(ticker){
+    const makeItem = a =>
+      `<a class="news-ticker-item" href="${a.url}" target="_blank" rel="noopener">
+        <span class="news-ticker-tag">${a.tag}</span>
+        ${a.title}
+        <span class="news-ticker-sep">·</span>
+        <span class="news-ticker-source">${a.source}</span>
+      </a>`;
+    ticker.innerHTML = [...tickerArticles, ...tickerArticles].map(makeItem).join('');
+  }
+}
+loadNews();
+
 function toggleMenu(){
   const b=document.getElementById('burger');
   const d=document.getElementById('drawer');
