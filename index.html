@@ -326,6 +326,14 @@ section,[id]{scroll-margin-top:150px}
 .nw:hover{color:var(--blue)}
 .nw em{color:var(--blue);background:rgba(42,109,179,.08)}
 .nw small{color:var(--muted)}
+
+/* market strips: same ground as the header so the top reads as one block */
+.strip,.strip.news{background:var(--paper);border-bottom:1px solid var(--line)}
+.strip .lab{background:var(--bg);color:var(--navy);border-right:1px solid var(--line);font-weight:600}
+.strip .lab::before{content:"";width:3px;align-self:stretch;margin:9px 0;background:var(--gold);margin-right:2px}
+.strip.news .lab i{display:none}
+.strip:not(.news) .lab::before{display:none}
+header{border-bottom:1px solid var(--line)}
 /* footer */
 footer{background:var(--navy-deep);color:#a9bdd2;font-size:.88rem}
 .fgrid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:40px;padding-block:72px 48px}
