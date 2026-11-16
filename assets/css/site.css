@@ -30,7 +30,7 @@ img{display:block}
 .wrap{max-width:1200px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
 .sec{padding-block:112px}
 .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);display:flex;align-items:center;gap:12px}
-.eyebrow::before{content:"";width:28px;height:2px;background:var(--gold)}
+.eyebrow::before{content:none}
 .h2{font-weight:300;font-size:clamp(2rem,3.8vw,3rem);line-height:1.12;letter-spacing:-.03em;color:var(--navy);margin-top:18px}
 .h2 em{font-style:normal;color:var(--blue);font-weight:400}
 .lead{color:var(--muted);font-size:1.08rem;max-width:60ch;margin-top:20px}
