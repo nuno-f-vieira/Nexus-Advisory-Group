@@ -524,3 +524,24 @@ setInterval(fetchFinnhub, 30000);
     if(!reduce) setInterval(()=>{step=(step+1)%4;},2800);
   });
 })();
+
+/* Contact form: send to Formspree in the background and confirm on the page */
+(function(){
+  const f=document.getElementById('f'); if(!f||!window.fetch) return;
+  const pt=(document.documentElement.lang||'').toLowerCase().startsWith('pt');
+  const T=pt?{sending:'A enviar…',ok:'Obrigado. Entraremos em contacto brevemente.',err:'Não foi possível enviar. Tente novamente ou escreva para info@nexus-advisorygroup.com.'}
+            :{sending:'Sending…',ok:'Thank you. We will be in touch.',err:'Something went wrong. Please try again or email info@nexus-advisorygroup.com.'};
+  const btn=f.querySelector('button[type="submit"]'), label=btn.innerHTML;
+  let msg=f.querySelector('.fmsg'); if(!msg){msg=document.createElement('p'); msg.className='fmsg'; msg.setAttribute('role','status'); msg.setAttribute('aria-live','polite'); btn.insertAdjacentElement('afterend',msg);}
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    msg.textContent=''; msg.classList.remove('err');
+    btn.disabled=true; btn.textContent=T.sending;
+    try{
+      const r=await fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}});
+      if(!r.ok) throw new Error(r.status);
+      f.reset(); msg.textContent=T.ok;
+    }catch(_){msg.textContent=T.err; msg.classList.add('err');}
+    finally{btn.disabled=false; btn.innerHTML=label;}
+  });
+})();
